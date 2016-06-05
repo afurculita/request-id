@@ -1,0 +1,48 @@
+{
+    "name":          "arkitekto/request-id",
+    "description":   "Middleware for adding a request id to PSR7 Requests",
+    "type":          "library",
+    "prefer-stable": true,
+    "license":       "MIT",
+    "authors":       [
+        {
+            "name":  "Alexandru Furculita",
+            "email": "alex@furculita.net"
+        }
+    ],
+    "keywords":      [
+        "middleware",
+        "psr",
+        "psr-7",
+        "request-id",
+        "correlation-id"
+    ],
+    "require":       {
+        "php":              "^5.5 || ^7.0",
+        "psr/http-message": "^1.0"
+    },
+    "require-dev":   {
+        "phpspec/phpspec":                 "2.*",
+        "friendsofphp/php-cs-fixer":       "^1.11",
+        "bossa/phpspec2-expect":           "^1.0",
+        "ramsey/uuid":                     "^3.0",
+        "zendframework/zend-diactoros":    "^1.1.3",
+        "twig/twig":                       "^1.0"
+    },
+    "suggest":       {
+        "ramsey/uuid": "To use Ramsey\\Uuid generators"
+    },
+    "autoload":      {
+        "psr-4": {
+            "Arki\\RequestId\\": "src/"
+        }
+    },
+    "autoload-dev":  {
+        "psr-4": {
+            "spec\\Arki\\RequestId\\": "spec/"
+        }
+    },
+    "config":        {
+        "bin-dir": "bin"
+    }
+}

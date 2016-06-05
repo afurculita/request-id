@@ -1,0 +1,7 @@
+formatter.name: pretty
+
+suites:
+    main:
+        namespace: Arki\RequestId
+        psr4_prefix: Arki\RequestId
+        src_path: ./src
