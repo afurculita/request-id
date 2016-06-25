@@ -1,5 +1,3 @@
-formatter.name: pretty
-
 suites:
     main:
         namespace: Arki\RequestId
