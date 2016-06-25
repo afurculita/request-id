@@ -58,8 +58,8 @@ final class DefaultRequestIdProviderFactory implements RequestIdProviderFactory
         return new DefaultRequestIdProvider(
             $request,
             $this->generator,
-            $this->overrideRequestIdPolicy,
-            $this->headerName
+            $this->headerName,
+            $this->overrideRequestIdPolicy
         );
     }
 }
