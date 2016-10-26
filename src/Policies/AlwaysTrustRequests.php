@@ -13,9 +13,14 @@ namespace Arki\RequestId\Policies;
 
 use Psr\Http\Message\RequestInterface;
 
-final class AlwaysOverrideRequestIds implements OverrideRequestIdPolicy
+final class AlwaysTrustRequests implements TrustRequestPolicy
 {
-    public function isAllowedToOverride(RequestInterface $request)
+    /**
+     * @param RequestInterface $request
+     *
+     * @return bool
+     */
+    public function shouldTrust(RequestInterface $request)
     {
         return true;
     }

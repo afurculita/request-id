@@ -21,6 +21,10 @@ final class AddsRequestIdToHttpMessage implements HttpMessageDecorator
 
     private $headerName;
 
+    /**
+     * @param RequestIdProvider $requestIdProvider
+     * @param string            $headerName
+     */
     public function __construct(RequestIdProvider $requestIdProvider, $headerName = RequestId::HEADER_NAME)
     {
         $this->requestIdProvider = $requestIdProvider;

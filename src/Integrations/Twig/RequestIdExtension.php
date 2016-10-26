@@ -22,10 +22,19 @@ final class RequestIdExtension extends \Twig_Extension
      * @var RequestIdProvider
      */
     private $provider;
+    /**
+     * @var string
+     */
+    private $functionName;
 
-    public function __construct(RequestIdProvider $provider)
+    /**
+     * @param RequestIdProvider $provider
+     * @param string            $functionName
+     */
+    public function __construct(RequestIdProvider $provider, $functionName = 'request_id')
     {
         $this->provider = $provider;
+        $this->functionName = $functionName;
     }
 
     /**
@@ -34,7 +43,7 @@ final class RequestIdExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('request_id', [$this->provider, 'getRequestId']),
+            new \Twig_SimpleFunction($this->functionName, [$this->provider, 'getRequestId']),
         ];
     }
 

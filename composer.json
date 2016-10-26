@@ -1,40 +1,44 @@
 {
-    "name":         "arkitekto/request-id",
-    "type":         "library",
-    "description":  "Middleware for adding a request id to PSR7 Requests",
-    "keywords":     [
+    "name": "arkitekto/request-id",
+    "type": "library",
+    "description": "Middleware for adding a request id to PSR7 Requests",
+    "keywords": [
         "middleware",
         "psr",
         "psr-7",
         "request-id",
         "correlation-id"
     ],
-    "homepage":     "http://github.com/arkitekto/request-id",
-    "license":      "MIT",
-    "authors":      [
+    "homepage": "http://github.com/arkitekto/request-id",
+    "license": "MIT",
+    "authors": [
         {
-            "name":     "Alexandru Furculita",
-            "email":    "alex@furculita.net",
+            "name": "Alexandru Furculita",
+            "email": "alex@furculita.net",
             "homepage": "http://alex.furculita.net",
-            "role":     "Developer"
+            "role": "Developer"
         }
     ],
-    "require":      {
-        "php":              "^5.5 || ^7.0",
+    "require": {
+        "php": "^5.5 || ^7.0",
         "psr/http-message": "^1.0"
     },
-    "require-dev":  {
-        "phpspec/phpspec":              "2.*",
-        "friendsofphp/php-cs-fixer":    "^1.11",
-        "bossa/phpspec2-expect":        "^1.0",
-        "ramsey/uuid":                  "^3.0",
+    "require-dev": {
+        "phpspec/phpspec": "2.*",
+        "friendsofphp/php-cs-fixer": "^1.11",
+        "bossa/phpspec2-expect": "^1.0",
+        "ramsey/uuid": "^3.0",
         "zendframework/zend-diactoros": "^1.1.3",
-        "twig/twig":                    "^1.0"
+        "twig/twig": "^1.0",
+        "symfony/framework-bundle": "^2.3 || ^3.0",
+        "symfony/psr-http-message-bridge": "^1.0",
+        "php-http/message-factory": ""
     },
-    "suggest":      {
-        "ramsey/uuid": "To use Ramsey\\Uuid generators"
+    "suggest": {
+        "ramsey/uuid": "To use Ramsey\\Uuid generators",
+        "symfony/psr-http-message-bridge": "To convert Symfony Requests to PSR 7 Requests"
     },
-    "autoload":     {
+    "autoload": {
         "psr-4": {
             "Arki\\RequestId\\": "src/"
         }
@@ -44,10 +48,11 @@
             "spec\\Arki\\RequestId\\": "spec/"
         }
     },
-    "scripts":      {
+    "scripts": {
+        "cs": "vendor/bin/php-cs-fixer fix",
         "test": "vendor/bin/phpspec run -f pretty --verbose"
     },
-    "extra":        {
+    "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
         }

@@ -3,7 +3,7 @@
 namespace spec\Arki\RequestId\Providers;
 
 use Arki\RequestId\Generators\RequestIdGenerator;
-use Arki\RequestId\Policies\OverrideRequestIdPolicy;
+use Arki\RequestId\Policies\TrustRequestPolicy;
 use Arki\RequestId\Providers\DefaultRequestIdProvider;
 use Arki\RequestId\Providers\DefaultRequestIdProviderFactory;
 use Arki\RequestId\Providers\RequestIdProviderFactory;
@@ -17,9 +17,9 @@ use Psr\Http\Message\RequestInterface;
  */
 class DefaultRequestIdProviderFactorySpec extends ObjectBehavior
 {
-    function let(RequestIdGenerator $generator, OverrideRequestIdPolicy $overrideRequestIdPolicy)
+    function let(RequestIdGenerator $generator, TrustRequestPolicy $trustRequestPolicy)
     {
-        $this->beConstructedWith($generator, RequestId::HEADER_NAME, $overrideRequestIdPolicy);
+        $this->beConstructedWith($generator, RequestId::HEADER_NAME, $trustRequestPolicy);
     }
 
     function it_is_initializable()

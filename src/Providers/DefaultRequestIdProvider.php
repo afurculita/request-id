@@ -12,8 +12,8 @@
 namespace Arki\RequestId\Providers;
 
 use Arki\RequestId\Generators\RequestIdGenerator;
-use Arki\RequestId\Policies\AlwaysOverrideRequestIds;
-use Arki\RequestId\Policies\OverrideRequestIdPolicy;
+use Arki\RequestId\Policies\AlwaysTrustRequests;
+use Arki\RequestId\Policies\TrustRequestPolicy;
 use Arki\RequestId\RequestId;
 use Psr\Http\Message\RequestInterface;
 
@@ -30,9 +30,9 @@ final class DefaultRequestIdProvider implements RequestIdProvider
     private $generator;
 
     /**
-     * @var OverrideRequestIdPolicy
+     * @var TrustRequestPolicy
      */
-    private $overridePolicy;
+    private $trustPolicy;
 
     /**
      * @var string
@@ -45,20 +45,20 @@ final class DefaultRequestIdProvider implements RequestIdProvider
     private $requestHeader;
 
     /**
-     * @param RequestInterface        $request
-     * @param RequestIdGenerator      $generator
-     * @param OverrideRequestIdPolicy $overridePolicy
-     * @param string                  $requestHeader
+     * @param RequestInterface   $request
+     * @param RequestIdGenerator $generator
+     * @param TrustRequestPolicy $trustPolicy
+     * @param string             $requestHeader
      */
     public function __construct(
         RequestInterface $request,
         RequestIdGenerator $generator,
         $requestHeader = RequestId::HEADER_NAME,
-        OverrideRequestIdPolicy $overridePolicy = null
+        TrustRequestPolicy $trustPolicy = null
     ) {
         $this->request = $request;
         $this->generator = $generator;
-        $this->overridePolicy = $overridePolicy ?: new AlwaysOverrideRequestIds();
+        $this->trustPolicy = $trustPolicy ?: new AlwaysTrustRequests();
         $this->requestHeader = $requestHeader;
     }
 
@@ -87,7 +87,7 @@ final class DefaultRequestIdProvider implements RequestIdProvider
      */
     private function canBeTakenFromRequest()
     {
-        return true === $this->overridePolicy->isAllowedToOverride($this->request)
+        return true === $this->trustPolicy->shouldTrust($this->request)
                && $this->request->hasHeader($this->requestHeader);
     }
 }

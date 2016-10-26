@@ -13,7 +13,12 @@ namespace Arki\RequestId\Policies;
 
 use Psr\Http\Message\RequestInterface;
 
-interface OverrideRequestIdPolicy
+interface TrustRequestPolicy
 {
-    public function isAllowedToOverride(RequestInterface $request);
+    /**
+     * @param RequestInterface $request
+     *
+     * @return bool
+     */
+    public function shouldTrust(RequestInterface $request);
 }
