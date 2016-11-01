@@ -1,13 +1,13 @@
 <?php
 
-namespace spec\Arki\RequestId;
+namespace spec\Arki\RequestId\Integrations\PSR7;
 
-use Arki\RequestId\Decorators\HttpMessageDecorator;
-use Arki\RequestId\Decorators\ReturnsMessageAsIs;
+use Arki\RequestId\Integrations\PSR7\AddRequestId;
+use Arki\RequestId\Integrations\PSR7\Decorators\HttpMessageDecorator;
+use Arki\RequestId\Integrations\PSR7\Decorators\ReturnsMessageAsIs;
 use Arki\RequestId\Providers\RequestIdProvider;
 use Arki\RequestId\Providers\RequestIdProviderFactory;
 use Arki\RequestId\RequestId;
-use Arki\RequestId\RequestIdPsr7Middleware;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\ResponseInterface;
@@ -15,9 +15,9 @@ use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequest;
 
 /**
- * @mixin RequestIdPsr7Middleware
+ * @mixin AddRequestId
  */
-class RequestIdPsr7MiddlewareSpec extends ObjectBehavior
+class AddRequestIdSpec extends ObjectBehavior
 {
     function let(
         RequestIdProviderFactory $providerFactory,
@@ -29,7 +29,7 @@ class RequestIdPsr7MiddlewareSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Arki\RequestId\RequestIdPsr7Middleware');
+        $this->shouldHaveType(AddRequestId::class);
     }
 
     function it_can_add_request_id_to_request_and_response(

@@ -7,7 +7,6 @@ use Arki\RequestId\Providers\DefaultRequestIdProvider;
 use Arki\RequestId\Providers\RequestIdProvider;
 use Arki\RequestId\RequestId;
 use PhpSpec\ObjectBehavior;
-use Psr\Http\Message\RequestInterface;
 
 /**
  * @mixin DefaultRequestIdProvider

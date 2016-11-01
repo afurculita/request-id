@@ -1,8 +1,9 @@
 <?php
 
-namespace spec\Arki\RequestId\Decorators;
+namespace spec\Arki\RequestId\Integrations\PSR7\Decorators;
 
 use Arki\RequestId\Integrations\PSR7\Decorators\AddsRequestIdToHttpMessage;
+use Arki\RequestId\Integrations\PSR7\Decorators\HttpMessageDecorator;
 use Arki\RequestId\Providers\RequestIdProvider;
 use Arki\RequestId\RequestId;
 use PhpSpec\ObjectBehavior;
@@ -20,7 +21,7 @@ class AddsRequestIdToHttpMessageSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Arki\RequestId\Decorators\AddsRequestIdToHttpMessage');
+        $this->shouldHaveType(AddsRequestIdToHttpMessage::class);
     }
 
     function it_is_a_http_message_decorator()

@@ -5,7 +5,6 @@ namespace spec\Arki\RequestId\Generators;
 use Arki\RequestId\Generators\PhpUniqidGenerator;
 use Arki\RequestId\Generators\RequestIdGenerator;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 /**
  * @mixin PhpUniqidGenerator
@@ -24,8 +23,6 @@ class PhpUniqidGeneratorSpec extends ObjectBehavior
 
     function it_generates_a_request_id()
     {
-        $requestId = $this->generate();
-
-        $requestId->shouldBeString();
+        $this->generate()->shouldBeString();
     }
 }

@@ -30,10 +30,8 @@ class DefaultRequestIdProviderFactorySpec extends ObjectBehavior
         $this->shouldImplement(RequestIdProviderFactory::class);
     }
 
-    function it_creates_request_id_providers(RequestInterface $request)
+    function it_creates_request_id_providers()
     {
-        $provider = $this->create($request);
-
-        $provider->shouldHaveType(DefaultRequestIdProvider::class);
+        $this->create()->shouldHaveType(DefaultRequestIdProvider::class);
     }
 }

@@ -5,7 +5,6 @@ namespace spec\Arki\RequestId\Generators;
 use Arki\RequestId\Generators\PrefixedGenerator;
 use Arki\RequestId\Generators\RequestIdGenerator;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 /**
  * @mixin PrefixedGenerator

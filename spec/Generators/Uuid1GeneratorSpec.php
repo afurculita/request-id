@@ -14,11 +14,6 @@ use Ramsey\Uuid\UuidInterface;
  */
 class Uuid1GeneratorSpec extends ObjectBehavior
 {
-    function let(UuidFactoryInterface $factory)
-    {
-        $this->beConstructedWith($factory);
-    }
-
     function it_is_initializable()
     {
         $this->shouldHaveType('Arki\RequestId\Generators\Uuid1Generator');
@@ -29,13 +24,8 @@ class Uuid1GeneratorSpec extends ObjectBehavior
         $this->shouldImplement(RequestIdGenerator::class);
     }
 
-    function it_generates_a_request_id(UuidFactoryInterface $factory, UuidInterface $uuid)
+    function it_generates_a_request_id()
     {
-        $factory->uuid1(null, null)->shouldBeCalled()->willReturn($uuid);
-        $uuid->toString()->willReturn('hubabuba');
-
-        $uuid = $this->generate();
-
-        $uuid->shouldBeEqualTo('hubabuba');
+        $this->generate()->shouldBeString();
     }
 }
