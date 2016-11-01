@@ -2,7 +2,7 @@
 
 namespace spec\Arki\RequestId\Generators;
 
-use Arki\RequestId\Generators\RamseyUuid1Generator;
+use Arki\RequestId\Generators\Uuid1Generator;
 use Arki\RequestId\Generators\RequestIdGenerator;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -10,9 +10,9 @@ use Ramsey\Uuid\UuidFactoryInterface;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * @mixin RamseyUuid1Generator
+ * @mixin Uuid1Generator
  */
-class RamseyUuid1GeneratorSpec extends ObjectBehavior
+class Uuid1GeneratorSpec extends ObjectBehavior
 {
     function let(UuidFactoryInterface $factory)
     {
@@ -21,7 +21,7 @@ class RamseyUuid1GeneratorSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Arki\RequestId\Generators\RamseyUuid1Generator');
+        $this->shouldHaveType('Arki\RequestId\Generators\Uuid1Generator');
     }
 
     function it_is_a_request_id_generator()

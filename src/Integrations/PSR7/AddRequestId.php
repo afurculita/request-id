@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Arkitekto\RequestId library.
+ * This file is part of the Arki\RequestId library.
  *
  * (c) Alexandru Furculita <alex@furculita.net>
  *
@@ -9,21 +9,21 @@
  * with this source code in the file LICENSE.md.
  */
 
-namespace Arki\RequestId;
+namespace Arki\RequestId\Integrations\PSR7;
 
-use Arki\RequestId\Decorators\AddsRequestIdToHttpMessage;
-use Arki\RequestId\Decorators\HttpMessageDecorator;
+use Arki\RequestId\Integrations\PSR7\Decorators\AddsRequestIdToHttpMessage;
+use Arki\RequestId\Integrations\PSR7\Decorators\HttpMessageDecorator;
+use Arki\RequestId\Providers\RequestAware;
 use Arki\RequestId\Providers\RequestIdProviderFactory;
+use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-final class RequestIdPsr7Middleware
+/**
+ * PSR7 Middleware that adds an id to requests and responses.
+ */
+final class AddRequestId
 {
-    /**
-     * @var RequestIdProviderFactory
-     */
-    private $providerFactory;
-
     /**
      * @var HttpMessageDecorator
      */
@@ -33,6 +33,10 @@ final class RequestIdPsr7Middleware
      * @var HttpMessageDecorator
      */
     private $responseDecorator;
+    /**
+     * @var RequestIdProviderFactory
+     */
+    private $providerFactory;
 
     /**
      * @param RequestIdProviderFactory $providerFactory
@@ -44,9 +48,9 @@ final class RequestIdPsr7Middleware
         HttpMessageDecorator $requestDecorator = null,
         HttpMessageDecorator $responseDecorator = null
     ) {
-        $this->providerFactory = $providerFactory;
         $this->requestDecorator = $requestDecorator;
         $this->responseDecorator = $responseDecorator;
+        $this->providerFactory = $providerFactory;
     }
 
     /**
@@ -54,13 +58,17 @@ final class RequestIdPsr7Middleware
      * @param ResponseInterface $response
      * @param callable          $next
      *
-     * @return ResponseInterface
+     * @return ResponseInterface|MessageInterface
      *
      * @throws \InvalidArgumentException for invalid header values or names
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
     {
-        $provider = $this->providerFactory->create($request);
+        if ($this->providerFactory instanceof RequestAware) {
+            $this->providerFactory->setRequest($request);
+        }
+
+        $provider = $this->providerFactory->create();
 
         if (!$this->requestDecorator) {
             $this->requestDecorator = new AddsRequestIdToHttpMessage($provider);
@@ -70,8 +78,6 @@ final class RequestIdPsr7Middleware
             $this->responseDecorator = new AddsRequestIdToHttpMessage($provider);
         }
 
-        $decoratedRequest = $this->requestDecorator->decorate($request);
-
-        return $this->responseDecorator->decorate($next($decoratedRequest, $response));
+        return $this->responseDecorator->decorate($next($this->requestDecorator->decorate($request), $response));
     }
 }

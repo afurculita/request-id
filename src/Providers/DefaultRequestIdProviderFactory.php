@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Arkitekto\RequestId library.
+ * This file is part of the Arki\RequestId library.
  *
  * (c) Alexandru Furculita <alex@furculita.net>
  *
@@ -12,9 +12,6 @@
 namespace Arki\RequestId\Providers;
 
 use Arki\RequestId\Generators\RequestIdGenerator;
-use Arki\RequestId\Policies\TrustRequestPolicy;
-use Arki\RequestId\RequestId;
-use Psr\Http\Message\RequestInterface;
 
 final class DefaultRequestIdProviderFactory implements RequestIdProviderFactory
 {
@@ -24,42 +21,18 @@ final class DefaultRequestIdProviderFactory implements RequestIdProviderFactory
     private $generator;
 
     /**
-     * @var TrustRequestPolicy
-     */
-    private $trustPolicy;
-
-    /**
-     * @var string
-     */
-    private $headerName;
-
-    /**
      * @param RequestIdGenerator $generator
-     * @param TrustRequestPolicy $trustRequestPolicy
-     * @param string             $headerName
      */
-    public function __construct(
-        RequestIdGenerator $generator,
-        $headerName = RequestId::HEADER_NAME,
-        TrustRequestPolicy $trustRequestPolicy = null
-    ) {
+    public function __construct(RequestIdGenerator $generator)
+    {
         $this->generator = $generator;
-        $this->trustPolicy = $trustRequestPolicy;
-        $this->headerName = $headerName;
     }
 
     /**
-     * @param RequestInterface $request
-     *
      * @return DefaultRequestIdProvider
      */
-    public function create(RequestInterface $request)
+    public function create()
     {
-        return new DefaultRequestIdProvider(
-            $request,
-            $this->generator,
-            $this->headerName,
-            $this->trustPolicy
-        );
+        return new DefaultRequestIdProvider($this->generator);
     }
 }

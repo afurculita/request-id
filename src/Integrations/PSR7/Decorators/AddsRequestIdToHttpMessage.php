@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Arkitekto\RequestId library.
+ * This file is part of the Arki\RequestId library.
  *
  * (c) Alexandru Furculita <alex@furculita.net>
  *
@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.md.
  */
 
-namespace Arki\RequestId\Decorators;
+namespace Arki\RequestId\Integrations\PSR7\Decorators;
 
 use Arki\RequestId\Providers\RequestIdProvider;
 use Arki\RequestId\RequestId;
@@ -17,17 +17,17 @@ use Psr\Http\Message\MessageInterface;
 
 final class AddsRequestIdToHttpMessage implements HttpMessageDecorator
 {
-    private $requestIdProvider;
+    private $idProvider;
 
     private $headerName;
 
     /**
-     * @param RequestIdProvider $requestIdProvider
+     * @param RequestIdProvider $idProvider
      * @param string            $headerName
      */
-    public function __construct(RequestIdProvider $requestIdProvider, $headerName = RequestId::HEADER_NAME)
+    public function __construct(RequestIdProvider $idProvider, $headerName = RequestId::HEADER_NAME)
     {
-        $this->requestIdProvider = $requestIdProvider;
+        $this->idProvider = $idProvider;
         $this->headerName = $headerName;
     }
 
@@ -42,6 +42,6 @@ final class AddsRequestIdToHttpMessage implements HttpMessageDecorator
      */
     public function decorate(MessageInterface $message)
     {
-        return $message->withHeader($this->headerName, $this->requestIdProvider->getRequestId());
+        return $message->withHeader($this->headerName, $this->idProvider->getRequestId());
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Arkitekto\RequestId library.
+ * This file is part of the Arki\RequestId library.
  *
  * (c) Alexandru Furculita <alex@furculita.net>
  *
@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.md.
  */
 
-namespace Arki\RequestId\Decorators;
+namespace Arki\RequestId\Integrations\PSR7\Decorators;
 
 use Psr\Http\Message\MessageInterface;
 

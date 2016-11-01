@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Arkitekto\RequestId library.
+ * This file is part of the Arki\RequestId library.
  *
  * (c) Alexandru Furculita <alex@furculita.net>
  *
@@ -29,7 +29,7 @@ final class PhpUniqidGenerator implements RequestIdGenerator
      *
      * @link http://php.net/manual/en/function.uniqid.php
      */
-    public function __construct($prefix = '', $moreEntropy = false)
+    public function __construct($prefix = '', $moreEntropy = true)
     {
         $this->prefix = (string) $prefix;
         $this->moreEntropy = (bool) $moreEntropy;

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Arkitekto\RequestId library.
+ * This file is part of the Arki\RequestId library.
  *
  * (c) Alexandru Furculita <alex@furculita.net>
  *
@@ -11,14 +11,10 @@
 
 namespace Arki\RequestId\Providers;
 
-use Psr\Http\Message\RequestInterface;
-
 interface RequestIdProviderFactory
 {
     /**
-     * @param RequestInterface $request
-     *
-     * @return DefaultRequestIdProvider
+     * @return RequestIdProvider
      */
-    public function create(RequestInterface $request);
+    public function create();
 }

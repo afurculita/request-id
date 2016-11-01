@@ -5,7 +5,6 @@ namespace spec\Arki\RequestId\Integrations\Twig;
 use Arki\RequestId\Integrations\Twig\RequestIdExtension;
 use Arki\RequestId\Providers\RequestIdProvider;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 /**
  * @mixin RequestIdExtension

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Arkitekto\RequestId library.
+ * This file is part of the Arki\RequestId library.
  *
  * (c) Alexandru Furculita <alex@furculita.net>
  *
@@ -12,27 +12,13 @@
 namespace Arki\RequestId\Providers;
 
 use Arki\RequestId\Generators\RequestIdGenerator;
-use Arki\RequestId\Policies\AlwaysTrustRequests;
-use Arki\RequestId\Policies\TrustRequestPolicy;
-use Arki\RequestId\RequestId;
-use Psr\Http\Message\RequestInterface;
 
 final class DefaultRequestIdProvider implements RequestIdProvider
 {
     /**
-     * @var RequestInterface
-     */
-    private $request;
-
-    /**
      * @var RequestIdGenerator
      */
     private $generator;
-
-    /**
-     * @var TrustRequestPolicy
-     */
-    private $trustPolicy;
 
     /**
      * @var string
@@ -40,26 +26,11 @@ final class DefaultRequestIdProvider implements RequestIdProvider
     private $requestId;
 
     /**
-     * @var string
-     */
-    private $requestHeader;
-
-    /**
-     * @param RequestInterface   $request
      * @param RequestIdGenerator $generator
-     * @param TrustRequestPolicy $trustPolicy
-     * @param string             $requestHeader
      */
-    public function __construct(
-        RequestInterface $request,
-        RequestIdGenerator $generator,
-        $requestHeader = RequestId::HEADER_NAME,
-        TrustRequestPolicy $trustPolicy = null
-    ) {
-        $this->request = $request;
+    public function __construct(RequestIdGenerator $generator)
+    {
         $this->generator = $generator;
-        $this->trustPolicy = $trustPolicy ?: new AlwaysTrustRequests();
-        $this->requestHeader = $requestHeader;
     }
 
     /**
@@ -71,23 +42,6 @@ final class DefaultRequestIdProvider implements RequestIdProvider
             return $this->requestId;
         }
 
-        if ($this->canBeTakenFromRequest()) {
-            $this->requestId = $this->request->getHeaderLine($this->requestHeader);
-        }
-
-        if (null === $this->requestId || '' === $this->requestId) {
-            $this->requestId = $this->generator->generate();
-        }
-
-        return $this->requestId;
-    }
-
-    /**
-     * @return bool
-     */
-    private function canBeTakenFromRequest()
-    {
-        return true === $this->trustPolicy->shouldTrust($this->request)
-               && $this->request->hasHeader($this->requestHeader);
+        return $this->requestId = $this->generator->generate();
     }
 }

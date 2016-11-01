@@ -2,12 +2,10 @@
 
 namespace spec\Arki\RequestId\Decorators;
 
-use Arki\RequestId\Decorators\AddsRequestIdToHttpMessage;
-use Arki\RequestId\Decorators\HttpMessageDecorator;
+use Arki\RequestId\Integrations\PSR7\Decorators\AddsRequestIdToHttpMessage;
 use Arki\RequestId\Providers\RequestIdProvider;
 use Arki\RequestId\RequestId;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Psr\Http\Message\MessageInterface;
 
 /**
@@ -36,13 +34,11 @@ class AddsRequestIdToHttpMessageSpec extends ObjectBehavior
         MessageInterface $returnedMessage
     ) {
         $requestIdProvider->getRequestId()
-                          ->shouldBeCalled()
-                          ->willReturn('chiuaua')
-        ;
+            ->shouldBeCalled()
+            ->willReturn('chiuaua');
         $message->withHeader(RequestId::HEADER_NAME, 'chiuaua')
-                ->shouldBeCalled()
-                ->willReturn($returnedMessage)
-        ;
+            ->shouldBeCalled()
+            ->willReturn($returnedMessage);
 
         $decoratedMessage = $this->decorate($message);
 

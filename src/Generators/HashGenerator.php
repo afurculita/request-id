@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Arkitekto\RequestId library.
+ * This file is part of the Arki\RequestId library.
  *
  * (c) Alexandru Furculita <alex@furculita.net>
  *
@@ -20,12 +20,19 @@ final class HashGenerator implements RequestIdGenerator
      */
     private $hashingAlgorithm;
 
+    /**
+     * @param RequestIdGenerator $generator
+     * @param string             $hashingAlgorithm
+     */
     public function __construct(RequestIdGenerator $generator, $hashingAlgorithm = 'md5')
     {
         $this->generator = $generator;
         $this->hashingAlgorithm = $hashingAlgorithm;
     }
 
+    /**
+     * @return string
+     */
     public function generate()
     {
         return hash($this->hashingAlgorithm, $this->generator->generate());

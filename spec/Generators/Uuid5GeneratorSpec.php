@@ -2,26 +2,25 @@
 
 namespace spec\Arki\RequestId\Generators;
 
-use Arki\RequestId\Generators\RamseyUuid3Generator;
 use Arki\RequestId\Generators\RequestIdGenerator;
+use Arki\RequestId\Generators\Uuid5Generator;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Ramsey\Uuid\UuidFactoryInterface;
 use Ramsey\Uuid\UuidInterface;
 
 /**
- * @mixin RamseyUuid3Generator
+ * @mixin Uuid5Generator
  */
-class RamseyUuid3GeneratorSpec extends ObjectBehavior
+class Uuid5GeneratorSpec extends ObjectBehavior
 {
     function let(UuidFactoryInterface $factory)
     {
-        $this->beConstructedWith($factory, 'ns', 'name');
+        $this->beConstructedWith('ns', 'name', $factory);
     }
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Arki\RequestId\Generators\RamseyUuid3Generator');
+        $this->shouldHaveType('Arki\RequestId\Generators\Uuid5Generator');
     }
 
     function it_is_a_request_id_generator()
@@ -31,7 +30,7 @@ class RamseyUuid3GeneratorSpec extends ObjectBehavior
 
     function it_generates_a_request_id(UuidFactoryInterface $factory, UuidInterface $uuid)
     {
-        $factory->uuid3('ns', 'name')->shouldBeCalled()->willReturn($uuid);
+        $factory->uuid5('ns', 'name')->shouldBeCalled()->willReturn($uuid);
         $uuid->toString()->willReturn('hubabuba');
 
         $uuid = $this->generate();

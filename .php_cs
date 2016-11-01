@@ -1,7 +1,7 @@
 <?php
 
 $header = <<<'EOF'
-This file is part of the Arkitekto\RequestId library.
+This file is part of the Arki\RequestId library.
 
 (c) Alexandru Furculita <alex@furculita.net>
 
@@ -13,14 +13,15 @@ EOF;
 
 return \Symfony\CS\Config\Config::create()
     // use default SYMFONY_LEVEL and extra fixers:
-    ->fixers(array(
-        'header_comment',
-        'ordered_use',
-        'strict',
-        'strict_param',
-    ))
+    ->fixers(
+        [
+            'header_comment',
+            'ordered_use',
+            'strict',
+            'strict_param',
+        ]
+    )
     ->finder(
         Symfony\CS\Finder\DefaultFinder::create()
             ->in('src')
-    )
-;
+    );

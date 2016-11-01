@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Arkitekto\RequestId library.
+ * This file is part of the Arki\RequestId library.
  *
  * (c) Alexandru Furculita <alex@furculita.net>
  *
@@ -14,4 +14,9 @@ namespace Arki\RequestId;
 final class RequestId
 {
     const HEADER_NAME = 'X-Request-ID';
+
+    private function __construct()
+    {
+        // noop
+    }
 }

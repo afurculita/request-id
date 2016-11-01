@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Arkitekto\RequestId library.
+ * This file is part of the Arki\RequestId library.
  *
  * (c) Alexandru Furculita <alex@furculita.net>
  *
@@ -11,7 +11,8 @@
 
 namespace Arki\RequestId\Integrations\Symfony\EventSubscribers;
 
-use Arki\RequestId\Integrations\Symfony\Decorators\ResponseDecorator;
+use Arki\RequestId\Providers\RequestIdProvider;
+use Arki\RequestId\RequestId;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -23,16 +24,22 @@ use Symfony\Component\HttpKernel\KernelEvents;
 final class AddsRequestIdOnResponse implements EventSubscriberInterface
 {
     /**
-     * @var ResponseDecorator
+     * @var RequestIdProvider
      */
-    private $decorator;
+    private $idProvider;
+    /**
+     * @var string
+     */
+    private $responseHeader;
 
     /**
-     * @param ResponseDecorator $decorator
+     * @param RequestIdProvider $idProvider
+     * @param string            $responseHeader
      */
-    public function __construct(ResponseDecorator $decorator)
+    public function __construct(RequestIdProvider $idProvider, $responseHeader = RequestId::HEADER_NAME)
     {
-        $this->decorator = $decorator;
+        $this->idProvider = $idProvider;
+        $this->responseHeader = $responseHeader;
     }
 
     /**
@@ -44,7 +51,11 @@ final class AddsRequestIdOnResponse implements EventSubscriberInterface
             return;
         }
 
-        $this->decorator->decorateResponse($event->getResponse());
+        if (null === $this->idProvider->getRequestId()) {
+            return;
+        }
+
+        $event->getResponse()->headers->set($this->responseHeader, $this->idProvider->getRequestId());
     }
 
     /**

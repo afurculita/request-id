@@ -7,7 +7,12 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
- > PSR7 middleware that provides framework-agnostic possibility to generate and add to request/response's header a request ID.
+This library includes:
+    
+ 1. A **PSR7 middleware** that provides framework-agnostic possibility to generate and add to request/response's header a request ID.
+ 1. A **Symfony Bundle** that provides possibility to generate and add a request id to request/response's header in a Symfony application.
+ 1. A **Monolog processor** that adds the request id to each log message.
+ 1. A **Twig Extension** that provides a function that returns the request id.
   
 [![Emblem](docs/emblem.jpg)](https://github.com/arkitekto/request-id)
 

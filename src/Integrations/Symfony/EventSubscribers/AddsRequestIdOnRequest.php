@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Arkitekto\RequestId library.
+ * This file is part of the Arki\RequestId library.
  *
  * (c) Alexandru Furculita <alex@furculita.net>
  *
@@ -11,7 +11,9 @@
 
 namespace Arki\RequestId\Integrations\Symfony\EventSubscribers;
 
-use Arki\RequestId\Integrations\Symfony\Decorators\RequestDecorator;
+use Arki\RequestId\Providers\RequestAware;
+use Arki\RequestId\Providers\RequestIdProviderFactory;
+use Arki\RequestId\RequestId;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -23,16 +25,22 @@ use Symfony\Component\HttpKernel\KernelEvents;
 final class AddsRequestIdOnRequest implements EventSubscriberInterface
 {
     /**
-     * @var RequestDecorator
+     * @var RequestIdProviderFactory
      */
-    private $decorator;
+    private $providerFactory;
+    /**
+     * @var string
+     */
+    private $requestHeader;
 
     /**
-     * @param RequestDecorator $decorator
+     * @param RequestIdProviderFactory $providerFactory
+     * @param string                   $requestHeader
      */
-    public function __construct(RequestDecorator $decorator)
+    public function __construct(RequestIdProviderFactory $providerFactory, $requestHeader = RequestId::HEADER_NAME)
     {
-        $this->decorator = $decorator;
+        $this->providerFactory = $providerFactory;
+        $this->requestHeader = $requestHeader;
     }
 
     /**
@@ -44,7 +52,17 @@ final class AddsRequestIdOnRequest implements EventSubscriberInterface
             return;
         }
 
-        $this->decorator->decorateRequest($event->getRequest());
+        if ($this->providerFactory instanceof RequestAware) {
+            $this->providerFactory->setRequest($event->getRequest());
+        }
+
+        $provider = $this->providerFactory->create();
+
+        if (null === $provider->getRequestId()) {
+            return;
+        }
+
+        $event->getRequest()->headers->set($this->requestHeader, $provider->getRequestId());
     }
 
     /**

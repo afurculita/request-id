@@ -11,10 +11,10 @@
 
 namespace Arki\RequestId\Providers;
 
-interface RequestIdProvider
+interface RequestAware
 {
     /**
-     * @return string|null
+     * @param object|array $request
      */
-    public function getRequestId();
+    public function setRequest($request);
 }

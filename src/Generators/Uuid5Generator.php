@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Arkitekto\RequestId library.
+ * This file is part of the Arki\RequestId library.
  *
  * (c) Alexandru Furculita <alex@furculita.net>
  *
@@ -11,9 +11,10 @@
 
 namespace Arki\RequestId\Generators;
 
+use Ramsey\Uuid\UuidFactory;
 use Ramsey\Uuid\UuidFactoryInterface;
 
-final class RamseyUuid3Generator implements RequestIdGenerator
+final class Uuid5Generator implements RequestIdGenerator
 {
     private $ns;
 
@@ -26,9 +27,9 @@ final class RamseyUuid3Generator implements RequestIdGenerator
      * @param string               $ns
      * @param string               $name
      */
-    public function __construct(UuidFactoryInterface $factory, $ns, $name)
+    public function __construct($ns, $name, UuidFactoryInterface $factory = null)
     {
-        $this->factory = $factory;
+        $this->factory = $factory ?: new UuidFactory();
         $this->ns = $ns;
         $this->name = $name;
     }
@@ -38,6 +39,6 @@ final class RamseyUuid3Generator implements RequestIdGenerator
      */
     public function generate()
     {
-        return $this->factory->uuid3($this->ns, $this->name)->toString();
+        return $this->factory->uuid5($this->ns, $this->name)->toString();
     }
 }
